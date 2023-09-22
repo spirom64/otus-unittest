@@ -20,6 +20,10 @@ public class CardServiceTest {
 
     CardService cardService;
 
+    private Long testAccountId = 100L;
+    private  String testCardNumber = "1111";
+    private String testCardPin = "0000";
+
     @BeforeEach
     void init() {
         cardsDao = mock(CardsDao.class);
@@ -69,6 +73,11 @@ public class CardServiceTest {
 
     @Test
     void putMoney() {
+        Card testCard = new Card(1L, testCardNumber, testAccountId, TestUtil.getHash(testCardPin));
+        when(cardsDao.getCardByNumber(testCardNumber))
+                .thenReturn(testCard);
+        cardService.putMoney(testCardNumber, testCardPin, BigDecimal.TEN);
+        verify(accountService).putMoney(testCard.getAccountId(), BigDecimal.TEN);
     }
 
     @Test

@@ -41,7 +41,7 @@ public class CashMachineServiceImpl implements CashMachineService {
         cardService.getBalance(cardNum, pin);
 
         List<Integer> arrangedNotes = new ArrayList<>(notes);
-        for (int i = 0; i < 4 - arrangedNotes.size(); i ++) {
+        for (int i = 0; i < 4 - notes.size(); i ++) {
             arrangedNotes.add(0);
         }
 
