@@ -10,22 +10,14 @@ import java.util.List;
 
 public class MoneyBoxServiceImpl implements MoneyBoxService {
 
-    private MoneyBox moneyBox;
 
     @Override
-    public MoneyBox changeMoneyBox(MoneyBox moneyBox) {
-        var oldBox = this.moneyBox;
-        this.moneyBox = moneyBox;
-        return oldBox;
-    }
-
-    @Override
-    public int checkSum() {
+    public int checkSum(MoneyBox moneyBox) {
         return moneyBox.getNote100() * 100 + moneyBox.getNote500() * 500 + moneyBox.getNote1000() * 1000 + moneyBox.getNote5000() * 5000;
     }
 
     @Override
-    public void putMoney(int note100, int note500, int note1000, int note5000) {
+    public void putMoney(MoneyBox moneyBox, int note100, int note500, int note1000, int note5000) {
         if (moneyBox == null) {
             throw new IllegalStateException("No money box");
         }
@@ -37,10 +29,10 @@ public class MoneyBoxServiceImpl implements MoneyBoxService {
     }
 
     @Override
-    public List<Integer> getMoney(int sum) {
+    public List<Integer> getMoney(MoneyBox moneyBox, int sum) {
         List<Integer> result = new ArrayList<>(Arrays.asList(0, 0, 0, 0));
 
-        if (sum > checkSum()) {
+        if (sum > checkSum(moneyBox)) {
             throw new IllegalStateException("Not enough money");
         }
 

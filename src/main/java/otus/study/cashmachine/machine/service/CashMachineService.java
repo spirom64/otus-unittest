@@ -11,4 +11,6 @@ public interface CashMachineService {
     BigDecimal putMoney(CashMachine machine, String cardNum, String pin, List<Integer> notes);
 
     BigDecimal checkBalance(CashMachine machine, String cardNum, String pin);
+
+    boolean changePin(String cardNum, String oldPin, String newPin);
 }

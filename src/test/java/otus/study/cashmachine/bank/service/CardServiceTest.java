@@ -3,6 +3,7 @@ package otus.study.cashmachine.bank.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import otus.study.cashmachine.TestUtil;
 import otus.study.cashmachine.bank.dao.CardsDao;
 import otus.study.cashmachine.bank.data.Card;
 import otus.study.cashmachine.bank.service.impl.CardServiceImpl;
@@ -18,6 +19,10 @@ public class CardServiceTest {
     CardsDao cardsDao;
 
     CardService cardService;
+
+    private Long testAccountId = 100L;
+    private  String testCardNumber = "1111";
+    private String testCardPin = "0000";
 
     @BeforeEach
     void init() {
@@ -40,7 +45,7 @@ public class CardServiceTest {
 
     @Test
     void checkBalance() {
-        Card card = new Card(1L, "1234", 1L, "0000");
+        Card card = new Card(1L, "1234", 1L, TestUtil.getHash("0000"));
         when(cardsDao.getCardByNumber(anyString())).thenReturn(card);
         when(accountService.checkBalance(1L)).thenReturn(new BigDecimal(1000));
 
@@ -54,7 +59,7 @@ public class CardServiceTest {
         ArgumentCaptor<Long> idCaptor = ArgumentCaptor.forClass(Long.class);
 
         when(cardsDao.getCardByNumber("1111"))
-                .thenReturn(new Card(1L, "1111", 100L, "0000"));
+                .thenReturn(new Card(1L, "1111", 100L, TestUtil.getHash("0000")));
 
         when(accountService.getMoney(idCaptor.capture(), amountCaptor.capture()))
                 .thenReturn(BigDecimal.TEN);
@@ -68,6 +73,11 @@ public class CardServiceTest {
 
     @Test
     void putMoney() {
+        Card testCard = new Card(1L, testCardNumber, testAccountId, TestUtil.getHash(testCardPin));
+        when(cardsDao.getCardByNumber(testCardNumber))
+                .thenReturn(testCard);
+        cardService.putMoney(testCardNumber, testCardPin, BigDecimal.TEN);
+        verify(accountService).putMoney(testCard.getAccountId(), BigDecimal.TEN);
     }
 
     @Test

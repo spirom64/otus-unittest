@@ -14,9 +14,9 @@ public class Cards {
         Account a2 = Accounts.accounts.get(2L);
         Account a3 = Accounts.accounts.get(3L);
 
-        cards.put("1111", new Card(1, "1111", 1L, "0000"));
-        cards.put("2222", new Card(2, "2222", 2L, "0000"));
-        cards.put("3333", new Card(3, "3333", 3L, "0000"));
+        cards.put("1111", new Card(1, "1111", 1L, "39dfa55283318d31afe5a3ff4a0e3253e2045e43"));
+        cards.put("2222", new Card(2, "2222", 2L, "39dfa55283318d31afe5a3ff4a0e3253e2045e43"));
+        cards.put("3333", new Card(3, "3333", 3L, "39dfa55283318d31afe5a3ff4a0e3253e2045e43"));
     }
 
     static Long idSequence = 10L;

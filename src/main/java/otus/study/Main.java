@@ -1,5 +1,6 @@
 package otus.study;
 
+import otus.study.cashmachine.bank.dao.AccountDao;
 import otus.study.cashmachine.bank.dao.CardsDao;
 import otus.study.cashmachine.bank.service.AccountService;
 import otus.study.cashmachine.bank.service.CardService;
@@ -18,15 +19,17 @@ import java.util.List;
 
 
 public class Main {
-    static AccountService accountService = new AccountServiceImpl();
-    static CardsDao cardsDao = new CardsDao();
-    static CardService cardService = new CardServiceImpl(accountService, cardsDao);
-    static MoneyBoxService moneyBoxService = new MoneyBoxServiceImpl();
-    static CashMachineService cashMachineService = new CashMachineServiceImpl(cardService, accountService, moneyBoxService);
+    static AccountDao accountDao = new AccountDao();
+
+    static AccountService accountService;
+    static CardsDao cardsDao;
+    static CardService cardService;
+    static MoneyBoxService moneyBoxService;
+    static CashMachineService cashMachineService;
 
 
     static {
-        accountService = new AccountServiceImpl();
+        accountService = new AccountServiceImpl(accountDao);
         cardsDao = new CardsDao();
         cardService = new CardServiceImpl(accountService, cardsDao);
         moneyBoxService = new MoneyBoxServiceImpl();
@@ -49,5 +52,9 @@ public class Main {
         cashMachineService.putMoney(cashMachine, "1111", "0000", Arrays.asList(0, 0, 0, 1));
         initialSum = cashMachineService.checkBalance(cashMachine, "1111", "0000");
         System.out.println("New sum " + initialSum);
+
+        cashMachineService.changePin("1111", "0000", "0001");
+
+        System.out.println("");
     }
 }

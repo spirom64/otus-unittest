@@ -7,12 +7,10 @@ import java.util.List;
 
 public interface MoneyBoxService {
 
-    MoneyBox changeMoneyBox(MoneyBox moneyBox);
+    int checkSum(MoneyBox moneyBox);
 
-    int checkSum();
+    void putMoney(MoneyBox moneyBox, int note100, int note500, int note1000, int note5000);
 
-    void putMoney(int note100, int note500, int note1000, int note5000);
-
-    List<Integer> getMoney(int sum);
+    List<Integer> getMoney(MoneyBox moneyBox, int sum);
 
 }
